@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getProductsById } from "../services/productService";
 import type { Product } from "../types/Product";
+import { useCart } from "../hooks/useCart";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { addToCart } = useCart();
 
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
@@ -74,11 +76,11 @@ const ProductDetails = () => {
         <div className="grid gap-10 rounded-2xl border border-gray-200 bg-gray-50 p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 md:grid-cols-2 md:p-10">
 
           {/* Product Image */}
-          <div className="flex min-h-[400px] items-center justify-center rounded-xl bg-white p-8 dark:bg-slate-950">
+          <div className="flex min-h-100 items-center justify-center rounded-xl bg-white p-8 dark:bg-slate-950">
             <img
               src={product.image}
               alt={product.title}
-              className="max-h-[400px] w-full object-contain"
+              className="max-h-100 w-full object-contain"
             />
           </div>
 
@@ -103,7 +105,8 @@ const ProductDetails = () => {
               {product.description}
             </p>
 
-            <button
+            <button 
+            onClick={() => addToCart(product)}
               className="mt-8 w-full cursor-pointer rounded-lg bg-indigo-600 px-6 py-3 font-semibold text-white transition-all duration-200 hover:bg-indigo-700 hover:shadow-lg sm:w-fit"
             >
               Add to Cart

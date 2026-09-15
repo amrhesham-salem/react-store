@@ -11,6 +11,10 @@ function Products() {
             return <div>Error: {error.message}</div>
         }
 
+        if(products.length === 0){
+            return <div>No products found</div>
+        }
+
    return (
 
   <section className="px-4 py-8 sm:px-6 lg:px-8">
